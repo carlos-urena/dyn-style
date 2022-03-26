@@ -2,19 +2,19 @@
 {
 
 
+    
 :root
 {
-    --tono   : 240 ;
-    --tono-1 : 280 ;
-
-    --color-texto                : hsl( var(--tono), 10%, 10%);
-    --color-tema                 : hsl( var(--tono), 70%, 30%) ;   
+    --hue                        : 240 ;
+    --color-texto                : hsl( var(--hue), 10%, 10%);
+    --color-tema                 : hsl( var(--hue), 70%, 30%) ;   
     --color-headers              : var( --color-tema ) ; 
     --color-subrayado-enlaces    : var( --color-tema ) ; 
-    --color-fondo-cabecera       : hsl( var(--tono), 5%, 70% ) ; 
-    --color-fondo-cuerpo-central : hsl( var(--tono), 5%, 90% ) ;
-    --color-fondo-bordes         : hsl( var(--tono), 5%, 95% ) ;
-    --color-enlaces-y-negrita    : hsl( var(--tono), 0%, 0% ) ;
+    --color-fondo-cabecera       : hsl( var(--hue), 20%, 30% ) ; 
+    --color-titulo-cabecera      : hsl( var(--hue), 60%, 90% );
+    --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 90% ) ;
+    --color-fondo-bordes         : hsl( var(--hue), 5%, 95% ) ;
+    --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 0% ) ;
     --tamano-fuente              : 12pt ;
     --tipo-fuente                : 'Signika' ;
     --tipo-fuente-headers        : 'Newsreader' ;
@@ -27,17 +27,16 @@
 /**
 :root
 {
-    --tono   : 80 ;
-    --tono-1 : 280 ;
-
-    --color-texto                : hsl( var(--tono), 0%, 75%);
-    --color-tema                 : hsl( var(--tono), 87%, 67%) ; 
+    --hue                        : 80 ;
+    --color-texto                : hsl( var(--hue), 0%, 75%);
+    --color-tema                 : hsl( var(--hue), 87%, 67%) ; 
     --color-headers              : var( --color-tema ) ; 
     --color-subrayado-enlaces    : var( --color-tema ) ; 
-    --color-fondo-cabecera       : hsl( var(--tono), 5%, 5% ) ; 
-    --color-fondo-cuerpo-central : hsl( var(--tono), 5%, 15% ) ;
-    --color-fondo-bordes         : hsl( var(--tono), 25%, 30% ) ;
-    --color-enlaces-y-negrita    : hsl( var(--tono), 0%, 100% ) ;
+    --color-fondo-cabecera       : hsl( var(--hue), 5%, 5% ) ; 
+    --color-titulo-cabecera      : hsl( var(--hue), 60%, 70% );
+    --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 15% ) ;
+    --color-fondo-bordes         : hsl( var(--hue), 25%, 30% ) ;
+    --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 100% ) ;
     --tamano-fuente              : 12pt ;
     --tipo-fuente                : courier ; 
     --tipo-fuente-headers        : courier  ;
@@ -80,6 +79,10 @@ b, a
 {
     color       : var(--color-enlaces-y-negrita) !important ;
     font-weight : 300 !important ; /** ver: body, html { font-weight: ... } arriba **/
+}
+#div-cabe h1
+{
+    color : var(--color-titulo-cabecera) !important ;
 }
 #div-cabe-cuerpo 
 {

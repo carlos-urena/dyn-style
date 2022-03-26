@@ -21,23 +21,38 @@
 
 <div id='div-cuerpo-central'>
 
-    <p>
-    Theme colour hue:<br/>
-    <span id='tone_controls_row'></span>
-    </p>
+    <h2>Theme color hue</h2>
+    Click: <span id='tone_controls_row'></span><br/>
+    Current: <span id='current-hue'><sup>o</sup></span>
+    
 
-  <p>
-  Headers: 
-  <input type='button' value='Roboto' onclick="SetHeadersFontFamily('Roboto','')"></input>
-  <input type='button' value='Roboto Condensed' onclick="SetHeadersFontFamily('Roboto Condensed','')"></input>
-  <input id='headers_family_name_text_box' type='text' ></input> <br/>
-  Text: 
-  <input type='button' value='Signika' onclick="SetTextFontFamily('Signika',null)"></input>
-  <input type='button' value='Merriweather' onclick="SetTextFontFamily('Merriweather','')"></input>
-  <input type='button' value='Recursive' onclick="SetTextFontFamily('Recursive','')"></input>
-  <input type='button' value='Dosis' onclick="SetTextFontFamily('Dosis','')"></input>
-  <input id='text_family_name_text_box' type='text' ></input> 
-  </p>
+
+  <h2>Headers font</h2>
+  
+    Type font name: 
+        <input id='headers_family_name_text_box' type='text' ></input> 
+        <br/>
+    Selected font names: 
+        <input type='button' value='Roboto'           onclick="SetHeadersFontFamily('Roboto','')"></input>
+        <input type='button' value='Roboto Condensed' onclick="SetHeadersFontFamily('Roboto Condensed','')"></input>
+        <input type='button' value='Concert One'      onclick="SetHeadersFontFamily('Concert One','')"></input>
+        <input type='button' value='Oswald'           onclick="SetHeadersFontFamily('Oswald','')"></input>
+        <br/>
+        Current: <span id='current-headers-font-name'></span>
+
+  
+  <h2>Text font</h2>
+  
+    Type font name:   <input id='text_family_name_text_box' type='text' ></input> <br/>
+    Selected font names: 
+        <input type='button' value='Merriweather' onclick="SetTextFontFamily('Merriweather','')"></input>
+        <input type='button' value='Recursive'    onclick="SetTextFontFamily('Recursive','')"></input>
+        <input type='button' value='Dosis'        onclick="SetTextFontFamily('Dosis','')"></input>
+        <input type='button' value='Signika'      onclick="SetTextFontFamily('Signika',null)"></input>
+        <input type='button' value='Neuton'       onclick="SetTextFontFamily('Neuton',null)"></input>
+        <input type='button' value='Cardo'       onclick="SetTextFontFamily('Cardo',null)"></input>
+        <br/>
+        Current: <span id='current-text-font-name'></span>
     
     
   <h2>What is Lorem Ipsum?</h2>
@@ -62,7 +77,7 @@
 </div>
 <div id='div-pie'>
     URI: <span id='uri'></span>.<br/>
-    Actualizado: <span id='actu'></span>.
+    Updated: <span id='actu'></span>.
 </div>
 </body>
 </html>

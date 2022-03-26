@@ -1,9 +1,12 @@
 
+    /**
+     * 
+     */
     function SetWidthAndPadding() 
     {
         const 
             window_width    = window.innerWidth,
-            max_text_width  = 900, // contenido del cuerpo no será más ancho de esto 
+            max_text_width  = 900, // max body content width
             min_padding     = 30,   // min padding beetween content and div
             max_padding     = 60
         let 
@@ -45,6 +48,10 @@
         cabe.style.paddingRight = padding_width
 
     }
+
+    /**
+     * 
+     */
     function OnDOMContentLoaded()
     {
         let uri  = document.getElementById('uri')
@@ -56,14 +63,18 @@
         AddToneControls()
         AddTextFamilyNameBoxEventListener()
         AddHeadersFamilyNameBoxEventListener()
-        //SetHeadersFontFamily( 'Roboto+Condensed')
-        //SetTextFontFamily( 'Signika')
+        SetHeadersFontFamily( 'Oswald')
+        SetTextFontFamily( 'Neuton')
+        SetHue(80)
 
     }
 
     var text_family_name_text_box = null
     var headers_family_name_text_box = null 
 
+    /**
+     * 
+     */
     function AddTextFamilyNameBoxEventListener()
     {
         text_family_name_text_box = document.getElementById('text_family_name_text_box');
@@ -77,6 +88,9 @@
         });
     }
 
+    /**
+     * 
+     */
     function AddHeadersFamilyNameBoxEventListener()
     {
         headers_family_name_text_box = document.getElementById('headers_family_name_text_box');
@@ -90,18 +104,26 @@
         });
     }
 
-
-    function set_tono( newval ) 
+    /**
+     * 
+     * @param {*} newval 
+     */
+    function SetHue( newval ) 
     {
-        
-        let r = document.querySelector(':root');
-        r.style.setProperty('--tono', newval );
-        console.log(`tono == ${newval}`)
+        let r = document.querySelector(':root')
+        r.style.setProperty('--hue', newval )
+        let ch = document.getElementById('current-hue')
+        if ( ch != null )
+            ch.innerHTML = `<b>${newval}<sup>o</sup></b>`
+        console.log(`hue == ${newval}`)
     }
-    function closure( nuevo_tono )
+    function SetHueClosure( new_hue )
     {
-      return function() { set_tono(nuevo_tono) }
+      return function() { SetHue( new_hue ) }
     }
+    /**
+     * 
+     */
     function AddToneControls( )
     {
       
@@ -115,18 +137,17 @@
           button_elem.type    = 'button' 
           button_elem.value   = ` ` 
           button_elem.style.background = `hsl( ${t}, 50%, 50% )`
-          button_elem.onclick = closure( t ) 
+          button_elem.onclick = SetHueClosure( t ) 
 
           cc.appendChild( button_elem )
-        //   if ( prev == null )
-        //     cc.prepend( button_elem )
-        //   else 
-        //     cc.insertBefore( button_elem, prev.nextSibling )
-        //   prev = button_elem
       }
     }
 
-    
+    /**
+     * 
+     * @param {*} string 
+     * @returns 
+     */
     function CleanString( string )
     {
         let s1 = string.replace(/\s\s+/g, ' ')
@@ -136,6 +157,11 @@
     {
         return string.replace(/\s/g, '+');
     }
+    /**
+     * 
+     * @param {*} p_family_name 
+     * @param {*} weight 
+     */
     function AddGoogleFontLink( p_family_name, weight ) 
     {
         let family_name_0 = CleanString( p_family_name )
@@ -152,20 +178,37 @@
         console.log(`added link -- name == ${family_name}`)
     }
 
+    /**
+     * 
+     * @param {*} p_family_name 
+     * @param {*} weight 
+     */
     function SetHeadersFontFamily( p_family_name, weight )
     {
         let family_name = CleanString( p_family_name )
         AddGoogleFontLink( family_name, weight )
         let r = document.querySelector(':root');
-        r.style.setProperty('--tipo-fuente-headers', family_name );
+        r.style.setProperty('--tipo-fuente-headers', family_name )
+        let chfn = document.getElementById('current-headers-font-name')
+        if ( chfn != null )
+            chfn.innerHTML = `<b>${p_family_name}</b>`
         console.log(`tipo fuente headers == ${family_name}`)
     }
+
+    /**
+     * 
+     * @param {*} p_family_name 
+     * @param {*} weight 
+     */
     function SetTextFontFamily( p_family_name, weight )
     {
         let family_name = CleanString( p_family_name )
         AddGoogleFontLink( family_name, weight )
         let r = document.querySelector(':root');
-        r.style.setProperty('--tipo-fuente', family_name );
+        r.style.setProperty('--tipo-fuente', family_name )
+        let ctfn = document.getElementById('current-text-font-name')
+        if ( ctfn != null )
+            ctfn.innerHTML = `<b>${p_family_name}</b>`
         console.log(`tipo fuente texto == ${family_name}`)
     }
 
