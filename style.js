@@ -274,7 +274,7 @@
                     observer.disconnect();
                 }
             });
-    
+            console.log('aqui')
             observer.observe(document.body, {
                 childList: true,
                 subtree: true
