@@ -1,0 +1,242 @@
+@media screen 
+{
+
+
+    
+:root
+{
+    --hue                        : 240 ;
+    --color-texto                : hsl( var(--hue), 10%, 10%);
+    --color-tema                 : hsl( var(--hue), 70%, 30%) ;   
+    --color-headers              : var( --color-tema ) ; 
+    --color-subrayado-enlaces    : var( --color-tema ) ; 
+    --color-fondo-cabecera       : hsl( var(--hue), 20%, 30% ) ; 
+    --color-titulo-cabecera      : hsl( var(--hue), 60%, 90% );
+    --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 90% ) ;
+    --color-fondo-bordes         : hsl( var(--hue), 5%, 95% ) ;
+    --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 0% ) ;
+    --tamano-fuente              : 12pt ;
+    --tipo-fuente                : 'Signika' ;
+    --tipo-fuente-headers        : 'Newsreader' ;
+    --sombra-cabe-cuerpo         : 0px 0px 20px 5px rgb( 70%,70%,70%); 
+    --margen-superior-pie        : 8px ;
+}
+
+
+
+/**
+:root
+{
+    --hue                        : 80 ;
+    --color-texto                : hsl( var(--hue), 0%, 75%);
+    --color-tema                 : hsl( var(--hue), 87%, 67%) ; 
+    --color-headers              : var( --color-tema ) ; 
+    --color-subrayado-enlaces    : var( --color-tema ) ; 
+    --color-fondo-cabecera       : hsl( var(--hue), 5%, 5% ) ; 
+    --color-titulo-cabecera      : hsl( var(--hue), 60%, 70% );
+    --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 15% ) ;
+    --color-fondo-bordes         : hsl( var(--hue), 25%, 30% ) ;
+    --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 100% ) ;
+    --tamano-fuente              : 12pt ;
+    --tipo-fuente                : courier ; 
+    --tipo-fuente-headers        : courier  ;
+    --font-weight-cabeceras      : 300 ;
+    --sombra-cabe-cuerpo         : none; 
+    --margen-superior-pie        : 0px ;
+    
+}
+**/
+
+
+
+* 
+{ 
+    box-sizing : border-box !important ; /** style.width incluye contenido+padding+bordeen todo los elem **/
+}
+
+body, html 
+{
+    margin       : 0 !important ;
+    padding      : 0 !important ;
+    border-width : 0 !important ;
+    border-style : none !important ;
+    overflow-x   : hidden !important ;
+    /** font-weight  : 300 !important ;  /** hay que hacer esto para seleccionar Signika 300 **/
+}
+body 
+{  
+   display              : flex ;
+   flex-direction       : column ;
+   align-items          : center ;
+   background-color     : var(--color-fondo-bordes);
+   color                : var(--color-texto);
+   font-size            : var(--tamano-fuente)  !important ;
+   font-family          : var(--tipo-fuente), serif ;
+
+   box-shadow        : var(--sombra) ; 
+}
+b, a
+{
+    color       : var(--color-enlaces-y-negrita) !important ;
+    font-weight : 300 !important ; /** ver: body, html { font-weight: ... } arriba **/
+}
+#div-cabe h1
+{
+    color : var(--color-titulo-cabecera) !important ;
+}
+#div-cabe-cuerpo 
+{
+    box-shadow : var(--sombra-cabe-cuerpo) ; 
+    background-color  : var(--color-fondo-cuerpo-central);
+    border-bottom-right-radius : 5px ;
+    border-bottom-left-radius  : 5px ;
+    
+}
+#div-cuerpo-central 
+{
+    /** text-align        : justify; **/
+    text-justify      : inter-word;
+    background-color  : var(--color-fondo-cuerpo-central);
+
+    padding-top       : 20px !important ;
+
+    margin-top        : 0px !important ;
+    margin-left       : 0px !important ;
+    margin-right      : 0px !important ;
+    margin-bottom     : 6px ;
+    
+    border-style      : none ;
+    border-top        : 0px !important ;
+    border-left       : 0px !important ;
+    border-right      : 0px !important ;
+    border-bottom     : 0px !important ;
+
+    overflow-x        : hidden !important ;
+    
+    /** padding-left, padding-right y bottom es fijado por programa **/
+}
+#div-pie 
+{
+    text-align       : right ;
+    background-color : rgba(100%,100%,100%,0%); /** transparent **/
+    margin           : 0px !important ;
+    margin-top       : var(--margen-superior-pie)  !important ;
+    padding-top      : 5px !important ;
+    padding-right    : 10px !important ;
+    padding-bottom   : 10px !important ;
+    border           : 0px !important ;
+    
+}
+#div-cabe 
+{
+    text-align       : left ;
+    border           : 0px !important ;
+    margin           : 0px !important ;
+    
+
+    background-color : var(--color-fondo-cabecera);
+    padding-top      : 20px !important ;
+    padding-bottom   : 10px !important ;
+    padding-right    : 10px !important ;
+    
+}
+#uri, #actu 
+{
+    color : var(--color-tema) ;
+}
+h1, h2
+{  font-family          : var(--tipo-fuente-headers), serif !important ; 
+}
+h1
+{  font-size            : 20pt !important;
+   font-weight          : var(--font-weight-cabeceras)  !important ;
+   border               : 0px ;
+   margin               : 0px ;
+   border-bottom-color  : var(--color-fondo-cabecera) ;
+   padding-bottom       : 5px ;
+   padding-top          : 10px ;
+}
+h2
+{  font-size            : 18pt !important;
+   font-weight          : var(--font-weight-cabeceras)  !important ;
+   color                : var(--color-headers) !important ;
+   margin-top           : 40px !important ;
+   border-top           : 0px ;
+   padding-top          : 10px ;
+
+   padding-bottom       :  5px !important ; 
+   border-bottom        :  0px !important ;
+   margin-bottom        : 10px !important ;
+   
+}
+h3
+{  font-weight          : var(--font-weight-cabeceras)  !important ;
+   font-size            : 12pt !important ;
+   color                : var(--color-enlaces-y-negrita) !important ;
+}
+a
+{  text-decoration      : none ;
+   color                : var(--color-texto);
+   border-bottom-width  : 1pt ;
+   border-bottom-style  : solid ;
+   border-bottom-color  : var(--color-subrayado-enlaces);
+}
+hr 
+{  border-color         : var(--color-tema) ; 
+}
+
+tt 
+{   
+    color : var(--color-tema)   !important;   
+}
+li:not(:last-child) 
+{
+    margin-bottom : 7px ; /** separación vertical entre items de lista **/
+}
+ul 
+{
+   list-style : none;
+}
+
+ul li::before 
+{
+  content     : "\2022";
+  color       : var(--color-tema);
+  font-weight : bold;
+  display     : inline-block; 
+  width       : 1em;
+  margin-left : -1em;
+}
+
+
+} /** fin de @media screen **/
+
+@media print 
+{
+    body, html, * 
+    {
+        font-size   : 14pt !important ;
+        font-family : 'Signika', sans-serif ;
+    }
+    h1, h2 
+    {
+        font-family : 'Roboto Condensed', serif ; 
+        font-weight : var(--font-weight-cabeceras) !important ;
+    }
+    h1 
+    {
+        font-size : 22pt !important ;
+    }
+    h2 
+    {
+        font-size : 20pt !important ;
+    }
+}
+
+@page 
+{
+    margin: 1.5cm ;
+    
+}
+
+
