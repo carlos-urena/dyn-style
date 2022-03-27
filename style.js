@@ -60,7 +60,7 @@
 
         uri.innerHTML = document.documentURI 
         actu.innerHTML = document.lastModified
-        ShowHideStyleControls()  // actually shows controls, because this is the first time called
+        
         waitForElmCUA('current-hue').then((elm) => {
             console.log('Element current-hue is ready');
             console.log(elm.textContent);
@@ -74,6 +74,8 @@
             SetTextFontFamily( 'Neuton')
             SetHue(80)
         });
+
+        ShowHideStyleControls()  // actually shows controls, because this is the first time called
         
 
     }
@@ -342,7 +344,7 @@
             return
         }
 
-        console.log(`showing controls [${controls_html}]`)
+        console.log(`showing controls `)
         controls.innerHTML = controls_html
         controls_shown = true 
 
