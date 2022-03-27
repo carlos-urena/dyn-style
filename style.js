@@ -1,4 +1,5 @@
 
+    var controls_shown = false 
     /**
      * 
      */
@@ -59,13 +60,21 @@
 
         uri.innerHTML = document.documentURI 
         actu.innerHTML = document.lastModified
-        SetWidthAndPadding()
-        AddToneControls()
-        AddTextFamilyNameBoxEventListener()
-        AddHeadersFamilyNameBoxEventListener()
-        SetHeadersFontFamily( 'Oswald')
-        SetTextFontFamily( 'Neuton')
-        SetHue(80)
+        ShowHideStyleControls()  // actually shows controls, because this is the first time called
+        waitForElmCUA('current-hue').then((elm) => {
+            console.log('Element current-hue is ready');
+            console.log(elm.textContent);
+        
+        
+            SetWidthAndPadding()
+            AddToneControls()
+            AddTextFamilyNameBoxEventListener()
+            AddHeadersFamilyNameBoxEventListener()
+            SetHeadersFontFamily( 'Oswald')
+            SetTextFontFamily( 'Neuton')
+            SetHue(80)
+        });
+        
 
     }
 
@@ -87,6 +96,7 @@
             }
         });
     }
+    // -------------------------------------------------------------------------------
 
     /**
      * 
@@ -103,7 +113,8 @@
             }
         });
     }
-
+    // -------------------------------------------------------------------------------
+    
     /**
      * 
      * @param {*} newval 
@@ -117,10 +128,19 @@
             ch.innerHTML = `<b>${newval}<sup>o</sup></b>`
         console.log(`hue == ${newval}`)
     }
-    function SetHueClosure( new_hue )
+    // -------------------------------------------------------------------------------
+    
+    /**
+     * returns a function which sets the hue to a new value
+     * @param {integer} new_hue 
+     * @returns the function which set the hue to 'new_hue'
+     */
+    function GetSetHueFunction( new_hue )
     {
       return function() { SetHue( new_hue ) }
     }
+    // -------------------------------------------------------------------------------
+
     /**
      * 
      */
@@ -137,7 +157,7 @@
           button_elem.type    = 'button' 
           button_elem.value   = ` ` 
           button_elem.style.background = `hsl( ${t}, 50%, 50% )`
-          button_elem.onclick = SetHueClosure( t ) 
+          button_elem.onclick = GetSetHueFunction( t ) 
 
           cc.appendChild( button_elem )
       }
@@ -211,6 +231,124 @@
             ctfn.innerHTML = `<b>${p_family_name}</b>`
         console.log(`tipo fuente texto == ${family_name}`)
     }
+
+    /**
+     * 
+     * @param {string} text 
+     * @returns        string with html text
+     */
+    function html( text )
+    {
+        return text 
+    }
+
+    function waitForElm(selector) {
+        return new Promise(resolve => {
+            if (document.querySelector(selector)) {
+                return resolve(document.querySelector(selector));
+            }
+    
+            const observer = new MutationObserver(mutations => {
+                if (document.querySelector(selector)) {
+                    resolve(document.querySelector(selector));
+                    observer.disconnect();
+                }
+            });
+    
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
+    }
+
+    function waitForElmCUA(selector) {
+        return new Promise(resolve => {
+            if (document.getElementById(selector) != null ) {
+                return resolve(document.getElementById(selector));
+            }
+    
+            const observer = new MutationObserver(mutations => {
+                if (document.getElementById(selector)!=null) {
+                    resolve(document.getElementById(selector));
+                    observer.disconnect();
+                }
+            });
+    
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        });
+    }
+    
+    
+
+    /**
+     * 
+     * @returns 
+     */
+    function ShowHideStyleControls(  )
+    {
+        var controls_html = html`
+
+            <h2>Theme color hue</h2>
+        
+            Click: <span id='tone_controls_row'></span><br/>
+            Current: <span id='current-hue'><sup>o</sup></span>
+            
+            <h2>Headers font</h2>
+        
+            Type font name: 
+                <input id='headers_family_name_text_box' type='text' ></input> 
+                <br/>
+            Selected font names: 
+                <input type='button' value='Roboto'           onclick="SetHeadersFontFamily('Roboto','')"></input>
+                <input type='button' value='Roboto Condensed' onclick="SetHeadersFontFamily('Roboto Condensed','')"></input>
+                <input type='button' value='Concert One'      onclick="SetHeadersFontFamily('Concert One','')"></input>
+                <input type='button' value='Oswald'           onclick="SetHeadersFontFamily('Oswald','')"></input>
+                <br/>
+                Current: <span id='current-headers-font-name'></span>
+
+        
+            <h2>Text font</h2>
+        
+            Type font name:   <input id='text_family_name_text_box' type='text' ></input> <br/>
+            Selected font names: 
+                <input type='button' value='Merriweather' onclick="SetTextFontFamily('Merriweather','')"></input>
+                <input type='button' value='Recursive'    onclick="SetTextFontFamily('Recursive','')"></input>
+                <input type='button' value='Dosis'        onclick="SetTextFontFamily('Dosis','')"></input>
+                <input type='button' value='Signika'      onclick="SetTextFontFamily('Signika',null)"></input>
+                <input type='button' value='Neuton'       onclick="SetTextFontFamily('Neuton',null)"></input>
+                <input type='button' value='Cardo'       onclick="SetTextFontFamily('Cardo',null)"></input>
+                <br/>
+                Current: <span id='current-text-font-name'></span>
+        `
+        // ----
+
+        let controls = document.getElementsByName('style-controls')
+        if ( controls == null )
+        {
+            console.log("cannot find 'style-controls'")
+            return 
+        }
+        
+        
+        if ( controls_shown )
+        {
+            console.log('hidding controls')
+            controls.innerHTML = ''
+            controls_shown = false 
+            return
+        }
+
+        console.log(`showing controls [${controls_html}]`)
+        controls.innerHTML = controls_html
+        controls_shown = true 
+
+        
+    }
+
 
     
 
