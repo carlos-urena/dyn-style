@@ -1,5 +1,11 @@
 
-    var controls_shown = false 
+    var controls_shown                = false 
+    var text_family_name_text_box     = null
+    var headers_family_name_text_box  = null 
+    var current_text_family_name      = 'Neuton'
+    var current_headers_family_name   = 'Oswald'
+    var current_hue                   = 80
+
     /**
      * 
      */
@@ -61,28 +67,11 @@
         uri.innerHTML = document.documentURI 
         actu.innerHTML = document.lastModified
         
-        waitForElmCUA('current-hue').then((elm) => {
-            console.log('Element current-hue is ready');
-            console.log(elm.textContent);
-        
-        
-            SetWidthAndPadding()
-            AddToneControls()
-            AddTextFamilyNameBoxEventListener()
-            AddHeadersFamilyNameBoxEventListener()
-            SetHeadersFontFamily( 'Oswald')
-            SetTextFontFamily( 'Neuton')
-            SetHue(80)
-        });
-
+        SetWidthAndPadding()
         ShowHideStyleControls()  // actually shows controls, because this is the first time called
-        
-
     }
 
-    var text_family_name_text_box = null
-    var headers_family_name_text_box = null 
-
+   
     /**
      * 
      */
@@ -123,6 +112,7 @@
      */
     function SetHue( newval ) 
     {
+        current_hue = newval
         let r = document.querySelector(':root')
         r.style.setProperty('--hue', newval )
         let ch = document.getElementById('current-hue')
@@ -208,6 +198,7 @@
     function SetHeadersFontFamily( p_family_name, weight )
     {
         let family_name = CleanString( p_family_name )
+        current_headers_family_name = family_name
         AddGoogleFontLink( family_name, weight )
         let r = document.querySelector(':root');
         r.style.setProperty('--tipo-fuente-headers', family_name )
@@ -225,6 +216,7 @@
     function SetTextFontFamily( p_family_name, weight )
     {
         let family_name = CleanString( p_family_name )
+        current_text_family_name = family_name
         AddGoogleFontLink( family_name, weight )
         let r = document.querySelector(':root');
         r.style.setProperty('--tipo-fuente', family_name )
@@ -264,28 +256,6 @@
         });
     }
 
-    function waitForElmCUA(selector) {
-        return new Promise(resolve => {
-            if (document.getElementById(selector) != null ) {
-                return resolve(document.getElementById(selector));
-            }
-    
-            const observer = new MutationObserver(mutations => {
-                if (document.getElementById(selector)!=null) {
-                    resolve(document.getElementById(selector));
-                    observer.disconnect();
-                }
-            });
-            console.log('aqui')
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-        });
-    }
-    
-    
-
     /**
      * 
      * @returns 
@@ -293,6 +263,8 @@
     function ShowHideStyleControls(  )
     {
         var controls_html = html`
+
+            <button id='show-hide-controls' onclick='ShowHideStyleControls()'>Hide controls</button>
 
             <h2>Theme color hue</h2>
         
@@ -302,13 +274,13 @@
             <h2>Headers font</h2>
         
             Type font name: 
-                <input id='headers_family_name_text_box' type='text' ></input> 
+                <input id='headers_family_name_text_box' type='text'/>
                 <br/>
             Selected font names: 
-                <input type='button' value='Roboto'           onclick="SetHeadersFontFamily('Roboto','')"></input>
-                <input type='button' value='Roboto Condensed' onclick="SetHeadersFontFamily('Roboto Condensed','')"></input>
-                <input type='button' value='Concert One'      onclick="SetHeadersFontFamily('Concert One','')"></input>
-                <input type='button' value='Oswald'           onclick="SetHeadersFontFamily('Oswald','')"></input>
+                <input type='button' value='Roboto'           onclick="SetHeadersFontFamily('Roboto','')"/>
+                <input type='button' value='Roboto Condensed' onclick="SetHeadersFontFamily('Roboto Condensed','')"/>
+                <input type='button' value='Concert One'      onclick="SetHeadersFontFamily('Concert One','')"/>
+                <input type='button' value='Oswald'           onclick="SetHeadersFontFamily('Oswald','')"/>
                 <br/>
                 Current: <span id='current-headers-font-name'></span>
 
@@ -317,38 +289,46 @@
         
             Type font name:   <input id='text_family_name_text_box' type='text' ></input> <br/>
             Selected font names: 
-                <input type='button' value='Merriweather' onclick="SetTextFontFamily('Merriweather','')"></input>
-                <input type='button' value='Recursive'    onclick="SetTextFontFamily('Recursive','')"></input>
-                <input type='button' value='Dosis'        onclick="SetTextFontFamily('Dosis','')"></input>
-                <input type='button' value='Signika'      onclick="SetTextFontFamily('Signika',null)"></input>
-                <input type='button' value='Neuton'       onclick="SetTextFontFamily('Neuton',null)"></input>
-                <input type='button' value='Cardo'       onclick="SetTextFontFamily('Cardo',null)"></input>
+                <input type='button' value='Merriweather' onclick="SetTextFontFamily('Merriweather','')"/>
+                <input type='button' value='Recursive'    onclick="SetTextFontFamily('Recursive','')"/>
+                <input type='button' value='Dosis'        onclick="SetTextFontFamily('Dosis','')"/>
+                <input type='button' value='Signika'      onclick="SetTextFontFamily('Signika',null)"/>
+                <input type='button' value='Neuton'       onclick="SetTextFontFamily('Neuton',null)"/>
+                <input type='button' value='Cardo'       onclick="SetTextFontFamily('Cardo',null)"/>
                 <br/>
                 Current: <span id='current-text-font-name'></span>
         `
         // ----
 
-        let controls = document.getElementsByName('style-controls')
+        let controls = document.getElementById('style-controls')
         if ( controls == null )
         {
             console.log("cannot find 'style-controls'")
             return 
         }
-        
-        
+                
         if ( controls_shown )
         {
             console.log('hidding controls')
-            controls.innerHTML = ''
+            controls.innerHTML = "<button id='show-hide-controls' onclick='ShowHideStyleControls()'>Show controls</button>"
+            controls.style = ''
             controls_shown = false 
             return
         }
 
-        console.log(`showing controls `)
         controls.innerHTML = controls_html
-        controls_shown = true 
 
-        
+        controls.style = `border-width : 2px  !important ; border-style : solid ; padding : 5px ; border-color : hsl(var(--hue),40%,40%);`
+
+        AddToneControls()
+        AddTextFamilyNameBoxEventListener()
+        AddHeadersFamilyNameBoxEventListener()
+
+        SetHeadersFontFamily( current_headers_family_name )
+        SetTextFontFamily( current_text_family_name )
+        SetHue( current_hue )
+
+        controls_shown = true 
     }
 
 
