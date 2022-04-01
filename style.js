@@ -2,7 +2,7 @@
     var controls_shown                = false 
     var text_family_name_text_box     = null
     var headers_family_name_text_box  = null 
-    var current_text_family_name      = 'Neuton'
+    var current_text_family_name      = 'Crimson Pro'
     var current_headers_family_name   = 'Oswald'
     var current_hue                   = 80
 
@@ -294,7 +294,8 @@
                 <input type='button' value='Dosis'        onclick="SetTextFontFamily('Dosis','')"/>
                 <input type='button' value='Signika'      onclick="SetTextFontFamily('Signika',null)"/>
                 <input type='button' value='Neuton'       onclick="SetTextFontFamily('Neuton',null)"/>
-                <input type='button' value='Cardo'       onclick="SetTextFontFamily('Cardo',null)"/>
+                <input type='button' value='Cardo'        onclick="SetTextFontFamily('Cardo',null)"/>
+                <input type='button' value='Crimson Pro'  onclick="SetTextFontFamily('Crimson Pro',null)"/>
                 <br/>
                 Current: <span id='current-text-font-name'></span>
         `
