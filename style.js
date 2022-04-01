@@ -3,9 +3,9 @@
     var text_family_name_text_box     = null
     var headers_family_name_text_box  = null 
     var current_text_family_name      = 'Crimson Pro'
-    var current_headers_family_name   = 'Oswald'
+    var current_headers_family_name   = 'Catamaran'
     var current_hue                   = 80
-
+    var current_dark_theme            = false   // false --> light, true --> dark  
     /**
      * 
      */
@@ -136,6 +136,123 @@
     /**
      * 
      */
+    function SetCSSRoot( css_text )
+    {
+        let root_ste = document.getElementById('root_css_style_elem')
+        if ( root_ste == null )
+        {   console.log("error: cannot find 'root_css_style_elem'")
+            return 
+        }
+        let text_node = document.createTextNode( css_text )
+        if ( root_ste.children.length == 0 )
+            root_ste.appendChild( text_node )
+        else 
+            root_ste.children[0] = text_node
+        console.log(`css root set.`)
+    }
+
+    // -------------------------------------------------------------------------------
+
+    function css( text )
+    {
+        return text 
+    }
+    // -------------------------------------------------------------------------------
+    
+    /**
+     * 
+     */
+     function GetLightThemeCSSText()
+     {
+        return css`
+             :root
+             {
+                 --hue                        : ${current_hue} ;
+                 --color-texto                : hsl( var(--hue), 10%, 10%);
+                 --color-tema                 : hsl( var(--hue), 70%, 30%) ;   
+                 --color-headers              : var( --color-tema ) ; 
+                 --color-subrayado-enlaces    : var( --color-tema ) ; 
+                 --color-fondo-cabecera       : hsl( var(--hue), 20%, 30% ) ; 
+                 --color-titulo-cabecera      : hsl( var(--hue), 60%, 90% );
+                 --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 90% ) ;
+                 --color-fondo-bordes         : hsl( var(--hue), 5%, 95% ) ;
+                 --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 0% ) ;
+                 --tamano-fuente              : 12pt ;
+                 --tipo-fuente                : ${current_text_family_name} ; 
+                 --tipo-fuente-headers        : ${current_headers_family_name} ;
+                 --sombra-cabe-cuerpo         : 0px 0px 20px 5px rgb( 70%,70%,70%); 
+                 --margen-superior-pie        : 8px ;
+             }
+         `
+    }
+    // -------------------------------------------------------------------------------
+    
+    /**
+     * 
+     */
+    function SetCSSLightTheme()
+    {
+        const light_root_css = GetLightThemeCSSText()
+        SetCSSRoot( light_root_css )
+        current_dark_theme = false        
+    }
+    // -------------------------------------------------------------------------------
+    /**
+     * 
+     */
+     function GetDarkThemeCSSText()
+     {
+        return css`
+             :root
+             {
+                 --hue                        : ${current_hue} ;
+                 --color-texto                : hsl( var(--hue), 0%, 75%);
+                 --color-tema                 : hsl( var(--hue), 87%, 67%) ; 
+                 --color-headers              : var( --color-tema ) ; 
+                 --color-subrayado-enlaces    : var( --color-tema ) ; 
+                 --color-fondo-cabecera       : hsl( var(--hue), 5%, 5% ) ; 
+                 --color-titulo-cabecera      : hsl( var(--hue), 60%, 70% );
+                 --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 15% ) ;
+                 --color-fondo-bordes         : hsl( var(--hue), 25%, 30% ) ;
+                 --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 100% ) ;
+                 --tamano-fuente              : 12pt ;
+                 --tipo-fuente                : ${current_text_family_name} ; 
+                 --tipo-fuente-headers        : ${current_headers_family_name}  ;
+                 --font-weight-cabeceras      : 300 ;
+                 --sombra-cabe-cuerpo         : none; 
+                 --margen-superior-pie        : 0px ;
+                 
+             }
+         `
+     }
+    // -------------------------------------------------------------------------------
+
+    /**
+     * 
+     */
+    function SetCSSDarkTheme()
+    {
+        const dark_root_css = GetDarkThemeCSSText()
+        SetCSSRoot( dark_root_css )
+        current_dark_theme = true
+    }
+    // -------------------------------------------------------------------------------
+
+    /**
+     * 
+     */
+    function SetCSSCurrentDarkLight()
+    {
+        if ( current_dark_theme )
+            SetCSSDarkTheme()
+        else
+            SetCSSLightTheme()
+    }
+    // -------------------------------------------------------------------------------
+
+    /**
+     * 
+     */
     function AddToneControls( )
     {
       
@@ -236,25 +353,25 @@
         return text 
     }
 
-    function waitForElm(selector) {
-        return new Promise(resolve => {
-            if (document.querySelector(selector)) {
-                return resolve(document.querySelector(selector));
-            }
+    // function waitForElm(selector) {
+    //     return new Promise(resolve => {
+    //         if (document.querySelector(selector)) {
+    //             return resolve(document.querySelector(selector));
+    //         }
     
-            const observer = new MutationObserver(mutations => {
-                if (document.querySelector(selector)) {
-                    resolve(document.querySelector(selector));
-                    observer.disconnect();
-                }
-            });
+    //         const observer = new MutationObserver(mutations => {
+    //             if (document.querySelector(selector)) {
+    //                 resolve(document.querySelector(selector));
+    //                 observer.disconnect();
+    //             }
+    //         });
     
-            observer.observe(document.body, {
-                childList: true,
-                subtree: true
-            });
-        });
-    }
+    //         observer.observe(document.body, {
+    //             childList: true,
+    //             subtree: true
+    //         });
+    //     });
+    // }
 
     /**
      * 
@@ -263,15 +380,21 @@
     function ShowHideStyleControls(  )
     {
         var controls_html = html`
+            <h2>Style controls</h2>
 
             <button id='show-hide-controls' onclick='ShowHideStyleControls()'>Hide controls</button>
 
-            <h2>Theme color hue</h2>
+            <h3>Theme dark/light</h3>
+
+            <input type='button' value='Dark theme' onclick="SetCSSDarkTheme()"/>
+            <input type='button' value='Light theme' onclick="SetCSSLightTheme()"/>
+
+            <h3>Theme color hue</h3>
         
             Click: <span id='tone_controls_row'></span><br/>
             Current: <span id='current-hue'><sup>o</sup></span>
             
-            <h2>Headers font</h2>
+            <h3>Headers font</h3>
         
             Type font name: 
                 <input id='headers_family_name_text_box' type='text'/>
@@ -281,11 +404,15 @@
                 <input type='button' value='Roboto Condensed' onclick="SetHeadersFontFamily('Roboto Condensed','')"/>
                 <input type='button' value='Concert One'      onclick="SetHeadersFontFamily('Concert One','')"/>
                 <input type='button' value='Oswald'           onclick="SetHeadersFontFamily('Oswald','')"/>
+                <input type='button' value='Arvo'             onclick="SetHeadersFontFamily('Arvo','')"/>
+                <input type='button' value='Josefin Sans'     onclick="SetHeadersFontFamily('Josefin Sans','')"/>
+                <input type='button' value='Catamaran'        onclick="SetHeadersFontFamily('Catamaran','')"/>
+
                 <br/>
                 Current: <span id='current-headers-font-name'></span>
 
         
-            <h2>Text font</h2>
+            <h3>Text font</h3>
         
             Type font name:   <input id='text_family_name_text_box' type='text' ></input> <br/>
             Selected font names: 
@@ -319,8 +446,9 @@
 
         controls.innerHTML = controls_html
 
-        controls.style = `border-width : 2px  !important ; border-style : solid ; padding : 5px ; border-color : hsl(var(--hue),40%,40%);`
+        //controls.style = `border-width : 1px  !important ; border-style : solid ; padding : 5px ; border-color : hsl(var(--hue),40%,40%);`
 
+        SetCSSCurrentDarkLight()
         AddToneControls()
         AddTextFamilyNameBoxEventListener()
         AddHeadersFamilyNameBoxEventListener()

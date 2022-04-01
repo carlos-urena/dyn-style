@@ -1,54 +1,6 @@
 @media screen 
 {
 
-
-    
-:root
-{
-    --hue                        : 240 ;
-    --color-texto                : hsl( var(--hue), 10%, 10%);
-    --color-tema                 : hsl( var(--hue), 70%, 30%) ;   
-    --color-headers              : var( --color-tema ) ; 
-    --color-subrayado-enlaces    : var( --color-tema ) ; 
-    --color-fondo-cabecera       : hsl( var(--hue), 20%, 30% ) ; 
-    --color-titulo-cabecera      : hsl( var(--hue), 60%, 90% );
-    --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 90% ) ;
-    --color-fondo-bordes         : hsl( var(--hue), 5%, 95% ) ;
-    --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 0% ) ;
-    --tamano-fuente              : 12pt ;
-    --tipo-fuente                : 'Signika' ;
-    --tipo-fuente-headers        : 'Newsreader' ;
-    --sombra-cabe-cuerpo         : 0px 0px 20px 5px rgb( 70%,70%,70%); 
-    --margen-superior-pie        : 8px ;
-}
-
-
-
-/**
-:root
-{
-    --hue                        : 80 ;
-    --color-texto                : hsl( var(--hue), 0%, 75%);
-    --color-tema                 : hsl( var(--hue), 87%, 67%) ; 
-    --color-headers              : var( --color-tema ) ; 
-    --color-subrayado-enlaces    : var( --color-tema ) ; 
-    --color-fondo-cabecera       : hsl( var(--hue), 5%, 5% ) ; 
-    --color-titulo-cabecera      : hsl( var(--hue), 60%, 70% );
-    --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 15% ) ;
-    --color-fondo-bordes         : hsl( var(--hue), 25%, 30% ) ;
-    --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 100% ) ;
-    --tamano-fuente              : 12pt ;
-    --tipo-fuente                : courier ; 
-    --tipo-fuente-headers        : courier  ;
-    --font-weight-cabeceras      : 300 ;
-    --sombra-cabe-cuerpo         : none; 
-    --margen-superior-pie        : 0px ;
-    
-}
-**/
-
-
-
 * 
 { 
     box-sizing : border-box !important ; /** style.width incluye contenido+padding+bordeen todo los elem **/
@@ -144,7 +96,7 @@ b, a
 {
     color : var(--color-tema) ;
 }
-h1, h2
+h1,h2,h3
 {  font-family          : var(--tipo-fuente-headers), serif !important ; 
 }
 h1
@@ -170,9 +122,9 @@ h2
    
 }
 h3
-{  font-weight          : var(--font-weight-cabeceras)  !important ;
-   font-size            : 12pt !important ;
-   color                : var(--color-enlaces-y-negrita) !important ;
+{  font-weight          : bold  !important ;
+   font-size            : 14pt !important ;
+   color                : var(--color-headers) !important ;
 }
 a
 {  text-decoration      : none ;
