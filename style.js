@@ -5,7 +5,35 @@
     var current_text_family_name      = 'Crimson Pro'
     var current_headers_family_name   = 'Catamaran'
     var current_hue                   = 80
-    var current_dark_theme            = false   // false --> light, true --> dark  
+    var current_dark_theme            = false   // false --> light, true --> dark 
+    var current_text_font_weight      = 100
+    var current_bold_text_font_weight = 400
+    
+    // -------------------------------------------------------------------------------
+    
+    /**
+     * Function for processing html text in literals
+     * @param {string} html_text 
+     * @returns        string with html text
+     */
+    function html( html_text )
+    {
+        return html_text 
+    }
+    // -------------------------------------------------------------------------------
+
+    /**
+     * Function for processing css code in literals
+     * 
+     * @param {string} css_text 
+     * @returns        unstransformed string with css text
+     */
+    function css( css_text )
+    {
+        return css_text 
+    }
+    // -------------------------------------------------------------------------------
+    
     /**
      * 
      */
@@ -151,12 +179,7 @@
         console.log(`css root set.`)
     }
 
-    // -------------------------------------------------------------------------------
-
-    function css( text )
-    {
-        return text 
-    }
+    
     // -------------------------------------------------------------------------------
     
     /**
@@ -175,11 +198,14 @@
                  --color-fondo-cabecera       : hsl( var(--hue), 20%, 30% ) ; 
                  --color-titulo-cabecera      : hsl( var(--hue), 60%, 90% );
                  --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 90% ) ;
+                 --color-fondo-controles      : hsl( var(--hue), 5%, 80% );
                  --color-fondo-bordes         : hsl( var(--hue), 5%, 95% ) ;
-                 --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 0% ) ;
+                 --color-texto-enlaces        : hsl( var(--hue), 60%, 30% ) ;
                  --tamano-fuente              : 12pt ;
                  --tipo-fuente                : ${current_text_family_name} ; 
                  --tipo-fuente-headers        : ${current_headers_family_name} ;
+                 --text-font-weight           : ${current_text_font_weight} ;
+                 --bold-text-font-weight      : ${current_bold_text_font_weight} ;
                  --sombra-cabe-cuerpo         : 0px 0px 20px 5px rgb( 70%,70%,70%); 
                  --margen-superior-pie        : 8px ;
              }
@@ -206,15 +232,17 @@
              :root
              {
                  --hue                        : ${current_hue} ;
-                 --color-texto                : hsl( var(--hue), 0%, 75%);
+                 --color-texto                : hsl( var(--hue), 10%, 80%);
                  --color-tema                 : hsl( var(--hue), 87%, 67%) ; 
                  --color-headers              : var( --color-tema ) ; 
                  --color-subrayado-enlaces    : var( --color-tema ) ; 
                  --color-fondo-cabecera       : hsl( var(--hue), 5%, 5% ) ; 
                  --color-titulo-cabecera      : hsl( var(--hue), 60%, 70% );
                  --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 15% ) ;
+                 --color-fondo-controles      : hsl( var(--hue), 5%, 30% );
                  --color-fondo-bordes         : hsl( var(--hue), 25%, 30% ) ;
-                 --color-enlaces-y-negrita    : hsl( var(--hue), 0%, 100% ) ;
+                 --color-texto-enlaces        : hsl( var(--hue), 60%, 80% ) ;
+                 
                  --tamano-fuente              : 12pt ;
                  --tipo-fuente                : ${current_text_family_name} ; 
                  --tipo-fuente-headers        : ${current_headers_family_name}  ;
@@ -251,7 +279,7 @@
     // -------------------------------------------------------------------------------
 
     /**
-     * 
+     *  Adds a row of colour buttons inside 'tone_controls_row' span element (with no text)
      */
     function AddToneControls( )
     {
@@ -343,35 +371,9 @@
         console.log(`tipo fuente texto == ${family_name}`)
     }
 
-    /**
-     * 
-     * @param {string} text 
-     * @returns        string with html text
-     */
-    function html( text )
-    {
-        return text 
-    }
+ 
 
-    // function waitForElm(selector) {
-    //     return new Promise(resolve => {
-    //         if (document.querySelector(selector)) {
-    //             return resolve(document.querySelector(selector));
-    //         }
-    
-    //         const observer = new MutationObserver(mutations => {
-    //             if (document.querySelector(selector)) {
-    //                 resolve(document.querySelector(selector));
-    //                 observer.disconnect();
-    //             }
-    //         });
-    
-    //         observer.observe(document.body, {
-    //             childList: true,
-    //             subtree: true
-    //         });
-    //     });
-    // }
+    // ------------------------------------------------------------------------------------------
 
     /**
      * 
@@ -391,42 +393,77 @@
 
             <h3>Theme color hue</h3>
         
-            Click: <span id='tone_controls_row'></span><br/>
-            Current: <span id='current-hue'><sup>o</sup></span>
-            
+            <table>
+                <tr><td>Click:</td>  <td><span id='tone_controls_row'></span></td>
+                <tr><td>Current:</td><td><span id='current-hue'><sup>o</sup></span></td>
+            </table>
+
             <h3>Headers font</h3>
         
-            Type font name: 
-                <input id='headers_family_name_text_box' type='text'/>
-                <br/>
-            Selected font names: 
-                <input type='button' value='Roboto'           onclick="SetHeadersFontFamily('Roboto','')"/>
-                <input type='button' value='Roboto Condensed' onclick="SetHeadersFontFamily('Roboto Condensed','')"/>
-                <input type='button' value='Concert One'      onclick="SetHeadersFontFamily('Concert One','')"/>
-                <input type='button' value='Oswald'           onclick="SetHeadersFontFamily('Oswald','')"/>
-                <input type='button' value='Arvo'             onclick="SetHeadersFontFamily('Arvo','')"/>
-                <input type='button' value='Josefin Sans'     onclick="SetHeadersFontFamily('Josefin Sans','')"/>
-                <input type='button' value='Catamaran'        onclick="SetHeadersFontFamily('Catamaran','')"/>
+            <table>
+                <tr>
+                    <td>Type font name:</td>
+                    <td><input id='headers_family_name_text_box' type='text'/></td>
+                </tr>
+                <tr>
+                    <td>Selected font names:</td>
+                    <td>
+                        <input type='button' value='Roboto'           onclick="SetHeadersFontFamily('Roboto','')"/>
+                        <input type='button' value='Roboto Condensed' onclick="SetHeadersFontFamily('Roboto Condensed','')"/>
+                        <input type='button' value='Concert One'      onclick="SetHeadersFontFamily('Concert One','')"/>
+                        <input type='button' value='Oswald'           onclick="SetHeadersFontFamily('Oswald','')"/>
+                        <input type='button' value='Arvo'             onclick="SetHeadersFontFamily('Arvo','')"/>
+                        <input type='button' value='Josefin Sans'     onclick="SetHeadersFontFamily('Josefin Sans','')"/>
+                        <input type='button' value='Catamaran'        onclick="SetHeadersFontFamily('Catamaran','')"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Current:</td> 
+                    <td><span id='current-headers-font-name'></span></td>
+                </tr>
+            </table>
 
-                <br/>
-                Current: <span id='current-headers-font-name'></span>
-
-        
             <h3>Text font</h3>
-        
-            Type font name:   <input id='text_family_name_text_box' type='text' ></input> <br/>
-            Selected font names: 
-                <input type='button' value='Merriweather' onclick="SetTextFontFamily('Merriweather','')"/>
-                <input type='button' value='Recursive'    onclick="SetTextFontFamily('Recursive','')"/>
-                <input type='button' value='Dosis'        onclick="SetTextFontFamily('Dosis','')"/>
-                <input type='button' value='Signika'      onclick="SetTextFontFamily('Signika',null)"/>
-                <input type='button' value='Neuton'       onclick="SetTextFontFamily('Neuton',null)"/>
-                <input type='button' value='Cardo'        onclick="SetTextFontFamily('Cardo',null)"/>
-                <input type='button' value='Crimson Pro'  onclick="SetTextFontFamily('Crimson Pro',null)"/>
-                <br/>
-                Current: <span id='current-text-font-name'></span>
+            <table>
+                <tr>
+                    <td>Type font name:</td>   
+                    <td><input id='text_family_name_text_box' type='text'/></td>
+                </tr>
+                <tr>
+                    <td>Selected font names:</td>
+                    <td>
+                        <input type='button' value='Merriweather' onclick="SetTextFontFamily('Merriweather','')"/>
+                        <input type='button' value='Recursive'    onclick="SetTextFontFamily('Recursive','')"/>
+                        <input type='button' value='Dosis'        onclick="SetTextFontFamily('Dosis','')"/>
+                        <input type='button' value='Signika'      onclick="SetTextFontFamily('Signika',null)"/>
+                        <input type='button' value='Neuton'       onclick="SetTextFontFamily('Neuton',null)"/>
+                        <input type='button' value='Cardo'        onclick="SetTextFontFamily('Cardo',null)"/>
+                        <input type='button' value='Crimson Pro'  onclick="SetTextFontFamily('Crimson Pro',null)"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Current:</td>
+                    <td><span id='current-text-font-name'></span></td>
+                </tr>
+                <tr>
+                    <td>Font weight:</td>
+                    <td>
+                        <select name="text_weight" id="text_weight">
+                            <option value="-1">None</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="300">300</option>
+                            <option value="400">400</option>
+                            <option value="500">500</option>
+                        </select> 
+                        (not working at all, WIP)
+                    </td>
+                </tr>
+            </table>
         `
         // ----
+
+        console.log('empieza ShowHide...')
 
         let controls = document.getElementById('style-controls')
         if ( controls == null )
@@ -446,6 +483,7 @@
 
         controls.innerHTML = controls_html
 
+        controls.style = 'background-color : var(--color-fondo-controles); padding : 10px ;'
         //controls.style = `border-width : 1px  !important ; border-style : solid ; padding : 5px ; border-color : hsl(var(--hue),40%,40%);`
 
         SetCSSCurrentDarkLight()

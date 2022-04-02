@@ -27,11 +27,11 @@ body
 
    box-shadow        : var(--sombra) ; 
 }
-b, a
+a
 {
-    color       : var(--color-enlaces-y-negrita) !important ;
-    font-weight : 300 !important ; /** ver: body, html { font-weight: ... } arriba **/
+    color       : var(--color-enlaces) !important ;
 }
+
 #div-cabe h1
 {
     color : var(--color-titulo-cabecera) !important ;
