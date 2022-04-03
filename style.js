@@ -4,10 +4,10 @@
     var headers_family_name_text_box  = null 
     var current_text_family_name      = 'Crimson Pro'
     var current_headers_family_name   = 'Catamaran'
-    var current_hue                   = 80
+    var current_hue                   = 280
     var current_dark_theme            = false   // false --> light, true --> dark 
-    var current_text_font_weight      = 100
-    var current_bold_text_font_weight = 400
+    var current_text_font_weight      = '300'
+    var current_bold_text_font_weight = '600'
     
     // -------------------------------------------------------------------------------
     
@@ -83,6 +83,7 @@
         cabe.style.paddingRight = padding_width
 
     }
+    // -------------------------------------------------------------------------------
 
     /**
      * 
@@ -98,7 +99,7 @@
         SetWidthAndPadding()
         ShowHideStyleControls()  // actually shows controls, because this is the first time called
     }
-
+    // -------------------------------------------------------------------------------
    
     /**
      * 
@@ -111,7 +112,7 @@
             {
                 let tfn = text_family_name_text_box.value   
                 console.log(`entered text family name == [${tfn}]`)
-                SetTextFontFamily( tfn, null )
+                SetTextFontFamily( tfn, '','' )
             }
         });
     }
@@ -179,7 +180,6 @@
         console.log(`css root set.`)
     }
 
-    
     // -------------------------------------------------------------------------------
     
     /**
@@ -191,8 +191,9 @@
              :root
              {
                  --hue                        : ${current_hue} ;
-                 --color-texto                : hsl( var(--hue), 10%, 10%);
-                 --color-tema                 : hsl( var(--hue), 70%, 30%) ;   
+                 --color-texto                : hsl( var(--hue), 20%, 15% );
+                 --color-texto-bold           : hsl( var(--hue), 20%, 5%  );
+                 --color-tema                 : hsl( var(--hue), 70%, 30% ) ;   
                  --color-headers              : var( --color-tema ) ; 
                  --color-subrayado-enlaces    : var( --color-tema ) ; 
                  --color-fondo-cabecera       : hsl( var(--hue), 20%, 30% ) ; 
@@ -200,7 +201,7 @@
                  --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 90% ) ;
                  --color-fondo-controles      : hsl( var(--hue), 5%, 80% );
                  --color-fondo-bordes         : hsl( var(--hue), 5%, 95% ) ;
-                 --color-texto-enlaces        : hsl( var(--hue), 60%, 30% ) ;
+                 --color-texto-enlaces        : hsl( var(--hue), 60%, 20% ) ;
                  --tamano-fuente              : 12pt ;
                  --tipo-fuente                : ${current_text_family_name} ; 
                  --tipo-fuente-headers        : ${current_headers_family_name} ;
@@ -233,6 +234,7 @@
              {
                  --hue                        : ${current_hue} ;
                  --color-texto                : hsl( var(--hue), 10%, 80%);
+                 --color-texto-bold           : hsl( var(--hue), 10%, 95% );
                  --color-tema                 : hsl( var(--hue), 87%, 67%) ; 
                  --color-headers              : var( --color-tema ) ; 
                  --color-subrayado-enlaces    : var( --color-tema ) ; 
@@ -240,13 +242,13 @@
                  --color-titulo-cabecera      : hsl( var(--hue), 60%, 70% );
                  --color-fondo-cuerpo-central : hsl( var(--hue), 5%, 15% ) ;
                  --color-fondo-controles      : hsl( var(--hue), 5%, 30% );
-                 --color-fondo-bordes         : hsl( var(--hue), 25%, 30% ) ;
+                 --color-fondo-bordes         : hsl( var(--hue), 25%, 20% ) ;
                  --color-texto-enlaces        : hsl( var(--hue), 60%, 80% ) ;
-                 
                  --tamano-fuente              : 12pt ;
                  --tipo-fuente                : ${current_text_family_name} ; 
                  --tipo-fuente-headers        : ${current_headers_family_name}  ;
-                 --font-weight-cabeceras      : 300 ;
+                 --text-font-weight           : ${current_text_font_weight} ;
+                 --bold-text-font-weight      : ${current_bold_text_font_weight} ;
                  --sombra-cabe-cuerpo         : none; 
                  --margen-superior-pie        : 0px ;
                  
@@ -299,6 +301,7 @@
           cc.appendChild( button_elem )
       }
     }
+    // ------------------------------------------------------------------------------------------
 
     /**
      * 
@@ -314,26 +317,40 @@
     {
         return string.replace(/\s/g, '+');
     }
+    // ------------------------------------------------------------------------------------------
+
     /**
      * 
-     * @param {*} p_family_name 
-     * @param {*} weight 
+     * @param {string} p_family_name 
+     * @param {string} weight1
+     * @param {string} weight2 
      */
-    function AddGoogleFontLink( p_family_name, weight ) 
+    function AddGoogleFontLink( p_family_name, weight1, weight2 ) 
     {
+        console.log(`AddGoogleFontLink: family name [${p_family_name}], weight1 == [${weight1}], weight2 == [${weight2}]`)
         let family_name_0 = CleanString( p_family_name )
         let family_name = SubstituteSpaces( family_name_0 )
 
         let weight_text = ''
-        if ( weight != '' && weight != null )
-            weight_text = `:wght@${weight}`
+        if ( weight1 != 'initial'  && weight1 != '' )
+            weight_text = `:wght@${weight1}`
+        
+        if ( weight2 != 'initial' && weight2 != '' && weight2 != weight1 )
+            if ( weight_text == '' )
+                weight_text = `:wght@${weight2}`
+            else 
+                weight_text = `${weight_text};${weight2}`
+
+        console.log(`weight text == [${weight_text}]`)
         let url_text = `https://fonts.googleapis.com/css2?family=${family_name}${weight_text}&display=swap`
+        console.log(`about to add link, url == [${url_text}]`)
         let link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = url_text ;
         document.getElementsByTagName('head')[0].appendChild(link);
         console.log(`added link -- name == ${family_name}`)
     }
+    // ------------------------------------------------------------------------------------------
 
     /**
      * 
@@ -344,7 +361,7 @@
     {
         let family_name = CleanString( p_family_name )
         current_headers_family_name = family_name
-        AddGoogleFontLink( family_name, weight )
+        AddGoogleFontLink( family_name, weight, '' )
         let r = document.querySelector(':root');
         r.style.setProperty('--tipo-fuente-headers', family_name )
         let chfn = document.getElementById('current-headers-font-name')
@@ -352,27 +369,93 @@
             chfn.innerHTML = `<b>${p_family_name}</b>`
         console.log(`tipo fuente headers == ${family_name}`)
     }
+    // ------------------------------------------------------------------------------------------
 
     /**
      * 
-     * @param {*} p_family_name 
-     * @param {*} weight 
+     * @param {string} p_family_name 
+     * @param {string} weight 
      */
-    function SetTextFontFamily( p_family_name, weight )
+    function SetTextFontFamily( p_family_name, p_text_weight, p_bold_weight )
     {
+        console.log(`SetTextFontFamily: family name [${p_family_name}], p_text_weight == [${p_text_weight}], p_bold_weight == [${p_bold_weight}]`)
         let family_name = CleanString( p_family_name )
         current_text_family_name = family_name
-        AddGoogleFontLink( family_name, weight )
+
+        let text_weight = p_text_weight 
+        if ( text_weight == '' )
+            text_weight = current_text_font_weight
+
+        current_text_font_weight = text_weight
+
+        let bold_weight = p_bold_weight 
+        if ( bold_weight == '' )
+            bold_weight = current_bold_text_font_weight
+
+        current_bold_text_font_weight = bold_weight
+
+
+        let e1 = document.getElementById("text_weight_select") 
+        if ( e1 != null )
+            e1.value = current_text_font_weight 
+        
+        let e2 = document.getElementById("bold_text_weight_select") 
+        if ( e2 != null )
+            e2.value = current_bold_text_font_weight 
+            
+        AddGoogleFontLink( family_name, current_text_font_weight, current_bold_text_font_weight )
+
         let r = document.querySelector(':root');
         r.style.setProperty('--tipo-fuente', family_name )
         let ctfn = document.getElementById('current-text-font-name')
         if ( ctfn != null )
             ctfn.innerHTML = `<b>${p_family_name}</b>`
-        console.log(`tipo fuente texto == ${family_name}`)
+
+        r.style.setProperty('--text-font-weight', current_text_font_weight )
+        r.style.setProperty('--bold-text-font-weight', current_bold_text_font_weight )
+
+        console.log(`tipo fuente texto == ${current_text_family_name}`)
     }
 
+    // ------------------------------------------------------------------------------------------
+    /**
+     * 
+     * @returns 
+     */
+     function BoldTextFontWeightChanged()
+     {
+         let select_elem = document.getElementById('bold_text_weight_select')
+         if ( select_elem == null )
+         {   console.log('error: cannot found "bold_text_weight_select" element')
+             return 
+         }
  
+         console.log(`selected bold text weight == [${select_elem.value}]`)
+         current_bold_text_font_weight = select_elem.value
+         SetTextFontFamily( current_text_family_name, current_text_font_weight, current_bold_text_font_weight )
+         let r = document.querySelector(':root')
+         r.style.setProperty('--bold-text-font-weight', current_bold_text_font_weight )
+     }
 
+    // ------------------------------------------------------------------------------------------
+    /**
+     * 
+     * @returns 
+     */
+    function TextFontWeightChanged()
+    {
+        let select_elem = document.getElementById('text_weight_select')
+        if ( select_elem == null )
+        {   console.log('error: cannot found "text_weight_select" element')
+            return 
+        }
+
+        console.log(`selected text weight == [${select_elem.value}]`)
+        current_text_font_weight = select_elem.value
+        SetTextFontFamily( current_text_family_name, current_text_font_weight, current_bold_text_font_weight )
+        let r = document.querySelector(':root')
+        r.style.setProperty('--text-font-weight', current_text_font_weight )
+    }
     // ------------------------------------------------------------------------------------------
 
     /**
@@ -432,13 +515,13 @@
                 <tr>
                     <td>Selected font names:</td>
                     <td>
-                        <input type='button' value='Merriweather' onclick="SetTextFontFamily('Merriweather','')"/>
-                        <input type='button' value='Recursive'    onclick="SetTextFontFamily('Recursive','')"/>
-                        <input type='button' value='Dosis'        onclick="SetTextFontFamily('Dosis','')"/>
-                        <input type='button' value='Signika'      onclick="SetTextFontFamily('Signika',null)"/>
-                        <input type='button' value='Neuton'       onclick="SetTextFontFamily('Neuton',null)"/>
-                        <input type='button' value='Cardo'        onclick="SetTextFontFamily('Cardo',null)"/>
-                        <input type='button' value='Crimson Pro'  onclick="SetTextFontFamily('Crimson Pro',null)"/>
+                        <input type='button' value='Merriweather' onclick="SetTextFontFamily('Merriweather','','')"/>
+                        <input type='button' value='Recursive'    onclick="SetTextFontFamily('Recursive','','')"/>
+                        <input type='button' value='Dosis'        onclick="SetTextFontFamily('Dosis','','')"/>
+                        <input type='button' value='Signika'      onclick="SetTextFontFamily('Signika','','')"/>
+                        <input type='button' value='Neuton'       onclick="SetTextFontFamily('Neuton','','')"/>
+                        <input type='button' value='Cardo'        onclick="SetTextFontFamily('Cardo','','')"/>
+                        <input type='button' value='Crimson Pro'  onclick="SetTextFontFamily('Crimson Pro','','')"/>
                     </td>
                 </tr>
                 <tr>
@@ -448,15 +531,33 @@
                 <tr>
                     <td>Font weight:</td>
                     <td>
-                        <select name="text_weight" id="text_weight">
-                            <option value="-1">None</option>
+                        <select name="text_weight" id="text_weight_select" onchange="TextFontWeightChanged()">
+                            <option value="initial">initial</option>
                             <option value="100">100</option>
                             <option value="200">200</option>
                             <option value="300">300</option>
                             <option value="400">400</option>
                             <option value="500">500</option>
+                            <option value="600">600</option>
+                            <option value="700">700</option>
+                            <option value="800">800</option>
                         </select> 
-                        (not working at all, WIP)
+                    </td>
+                </tr>
+                <tr>
+                    <td>Bold font weight:</td>
+                    <td>
+                        <select name="bold_text_weight" id="bold_text_weight_select" onchange="BoldTextFontWeightChanged()">
+                            <option value="initial">initial</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="300">300</option>
+                            <option value="400">400</option>
+                            <option value="500">500</option>
+                            <option value="600">600</option>
+                            <option value="700">700</option>
+                            <option value="800">800</option>
+                        </select> 
                     </td>
                 </tr>
             </table>
@@ -491,8 +592,8 @@
         AddTextFamilyNameBoxEventListener()
         AddHeadersFamilyNameBoxEventListener()
 
-        SetHeadersFontFamily( current_headers_family_name )
-        SetTextFontFamily( current_text_family_name )
+        SetHeadersFontFamily( current_headers_family_name, 'initial' )
+        SetTextFontFamily( current_text_family_name, current_text_font_weight, current_bold_text_font_weight )
         SetHue( current_hue )
 
         controls_shown = true 

@@ -24,14 +24,15 @@ body
    color                : var(--color-texto);
    font-size            : var(--tamano-fuente)  !important ;
    font-family          : var(--tipo-fuente), serif ;
-
-   box-shadow        : var(--sombra) ; 
+   font-weight          : var(--text-font-weight) !important ;
+   box-shadow           : var(--sombra) ; 
 }
-a
+
+b
 {
-    color       : var(--color-enlaces) !important ;
+    color       : var(--color-texto-bold) !important ;
+    font-weight : var(--bold-text-font-weight) !important;
 }
-
 #div-cabe h1
 {
     color : var(--color-titulo-cabecera) !important ;
@@ -128,7 +129,8 @@ h3
 }
 a
 {  text-decoration      : none ;
-   color                : var(--color-texto);
+   /**color                : var(--color-texto);**/
+   color                : var(--color-texto-enlaces) !important ;
    border-bottom-width  : 1pt ;
    border-bottom-style  : solid ;
    border-bottom-color  : var(--color-subrayado-enlaces);
